@@ -60,10 +60,33 @@ router.post('/add', upload, async (req, res) => {
 
 
 
-router.get("/", (req, res) => {
-    // res.send("Home page");
-    res.render("index", {title: "Home"});
+//get all users
+// router.get("/", (req, res) => {
+//     // res.send("Home page");
+//     // res.render("index", {title: "Home"});
+//     User.find().exec((err, users) => {
+//         if(err){
+//             res.json({ message: err.message });
+//         } else {
+//             res.render('index', {
+//                 title: 'Home page',
+//                 users: users,
+//             });
+//         }
+//     });
+// });
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.find().exec();
+        res.render('index', {
+            title: 'Home page',
+            users: users,
+        });
+    } catch (err) {
+        res.json({ message: err.message });
+    }
 });
+
 
 router.get("/add", (req, res) => {
     res.render("add_users", {title: "Add users"});
