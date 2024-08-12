@@ -17,6 +17,49 @@ var upload = multer({
     storage: storage,
 }).single("image");
 
+//insert an user into database route
+// router.post('/add', upload, (req, res) => {
+//     const user = new User({
+//         name: req.body.name,
+//         email: req.body.email,
+//         phone: req.body.phone,
+//         image: req.file.filename,
+//     });
+//     user.save((err) => {
+//         if(err){
+//             res.json({message: err.message, type: 'danger'});
+//         } else {
+//             req.session.message = {
+//                 type: 'success',
+//                 message: 'User added successfully'
+//             };
+//             res.redirect('/');
+//         }
+//     });
+// })
+router.post('/add', upload, async (req, res) => {
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        phone: req.body.phone,
+        image: req.file.filename,
+        created: new Date()  // Manually setting the `created` field
+    });
+
+    try {
+        await user.save();
+        req.session.message = {
+            type: 'success',
+            message: 'User added successfully'
+        };
+        res.redirect('/');
+    } catch (err) {
+        res.json({message: err.message, type: 'danger'});
+    }
+});
+
+
+
 router.get("/", (req, res) => {
     // res.send("Home page");
     res.render("index", {title: "Home"});
