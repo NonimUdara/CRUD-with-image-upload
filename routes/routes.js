@@ -193,4 +193,50 @@ router.post('/update/:id', upload, async (req, res) => {
     }
 });
 
+//delete user route
+// router.get('/delete/:id', (req, res) => {
+//     let id = req.params.id;
+//     User.findByIdAndRemove(id, (err, result) => {
+//         if(result.image != ''){
+//             try{
+//                 fs.unlinkSync('./uploads/'+result.image);
+//             } catch(err){
+//                 console.log(err);
+//             }
+//         }
+//         if(err){
+//             res.json({ message: err.message });
+//         } else {
+//             req.session.message = {
+//                 type: 'info',
+//                 message: 'User Deleted Successfully!',
+//             };
+//             res.redirect("/");
+//         }
+//     });
+// });
+
+router.get('/delete/:id', async (req, res) => {
+    let id = req.params.id;
+    try {
+        const result = await User.findByIdAndDelete(id);
+        if (result && result.image != '') {
+            try {
+                fs.unlinkSync('./uploads/' + result.image);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        req.session.message = {
+            type: 'info',
+            message: 'User Deleted Successfully!',
+        };
+        res.redirect("/");
+    } catch (err) {
+        res.json({ message: err.message });
+    }
+});
+
+
+
 module.exports = router;
