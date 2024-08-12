@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/NonimUdara/CRUD-with-image-upload/issues"
   },
-  "homepage": "https://github.com/NonimUdara/CRUD-with-image-upload#readme"
+  "homepage": "https://github.com/NonimUdara/CRUD-with-image-upload#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mongoose": "^8.5.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
